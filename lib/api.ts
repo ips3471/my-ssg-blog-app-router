@@ -13,10 +13,9 @@ export class PostPresenter {
 	}
 
 	private getPostWithField(filename: string, fields: string[]) {
-		console.log(filename, fields);
-
 		const filePath = join(this.rootDir, filename);
 		const file = fs.readFileSync(filePath, 'utf-8');
+
 		const { content, data } = matter(file);
 
 		const item: Item = {};
