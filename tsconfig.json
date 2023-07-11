@@ -21,7 +21,9 @@
 	"include": [
 		"next-env.d.ts",
 		"**/*.ts",
+		"**/*.js",
 		"**/*.tsx",
+		"**/*.jsx",
 		"test/api.test.ts",
 		"./jest.config.ts"
 	],
