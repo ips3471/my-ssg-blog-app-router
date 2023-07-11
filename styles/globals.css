@@ -6,4 +6,10 @@
 	.layout {
 		@apply p-3;
 	}
+	h2 {
+		@apply font-bold;
+	}
+	p {
+		@apply font-light mb-5;
+	}
 }

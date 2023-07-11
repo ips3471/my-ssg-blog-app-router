@@ -1,6 +1,7 @@
 import PostType from '@/interfaces/post';
 import { PostPresenter } from '@/lib/api';
 import markdownToHtml from '@/lib/markdownToHtml';
+import Link from 'next/link';
 
 type Props = {
 	post: PostType;
@@ -8,9 +9,15 @@ type Props = {
 
 export default function Post({ post }: Props) {
 	return (
-		<div>
-			{post.slug}
-			{post.content}
+		<div className='layout'>
+			<header className='py-2'>
+				<nav>
+					<Link className='text-blue-500 text-xl' href={'/'}>
+						Home
+					</Link>
+				</nav>
+			</header>
+			<div dangerouslySetInnerHTML={{ __html: post.content }} />
 		</div>
 	);
 }
@@ -30,8 +37,8 @@ export async function getStaticProps({ params }: Params) {
 	return {
 		props: {
 			post: {
-				slug: 'first-content',
-				content: `<h1>first content</h1>`,
+				slug: params.slug,
+				content: htmlString,
 			},
 		},
 	};
