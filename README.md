@@ -1,38 +1,81 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 프리온보딩 과제: Static Site Generator 구현 (DEMO)
 
-## Getting Started
+Next.js 프레임워크를 이용하여 Markdown을 HTML로 변환하여 게재합니다.
 
-First, run the development server:
+## Usage
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+1. `/__posts` 폴더에 `.md`형식의 포스트를 작성합니다.
+   > ```javascript
+   > //test.md
+   > ---
+   > title: 'test'
+   > date: '2023-07-11'
+   > ---
+   > # Markdown 작성
+   > **예시**입니다.
+   > ```
+2. `/index.tsx`에서 `getAllPosts` 메소드로 `.md` 파일을 파싱하여 리턴된 `PostType` 객체를 `getStaticProps`에 전달하여 아이템 목록을 렌더링합니다.
+   > ```javascript
+   > export const getStaticProps = async () => {
+   > 	const presenter = new PostPresenter();
+   > 	const allPosts = presenter.getAllPosts([
+   > 		'title',
+   > 		'date',
+   > 		'description',
+   > 		'slug',
+   > 	]);
+   >
+   > 	return {
+   > 		props: {
+   > 			allPosts,
+   > 		},
+   > 	};
+   > };
+   > ```
+3. 아이템의 상세 페이지를 렌더링할 때는 `getPostBySlug` 메소드를 이용해 각각의 markdown 데이터를 파싱할 수 있습니다.
+   > ```javascript
+   > export async function getStaticProps({ params }: Params) {
+   > 	const presenter = new PostPresenter();
+   > 	const fields = ['title', 'date', 'content', 'description'];
+   > 	const post = presenter.getPostBySlug(fields, params.slug);
+   > 	const htmlString = await markdownToHtml(post.content || '');
+   >
+   > 	return {
+   > 		props: {
+   > 			post: {
+   > 				slug: params.slug,
+   > 				content: htmlString,
+   > 			},
+   > 		},
+   > 	};
+   > }
+   > ```
+
+## TEST
+
+```javascript
+import { PostPresenter } from '../lib/api';
+
+describe('post presenter', () => {
+	let presenter: PostPresenter;
+
+	beforeEach(() => {
+		presenter = new PostPresenter('test/test-posts');
+	});
+
+	it('presents all posts without content', () => {
+		const posts = presenter.getAllPosts(['title', 'slug']);
+		expect(posts).toEqual([
+			{ title: 'test1', slug: 'test1' },
+			{ title: 'test2', slug: 'test2' },
+		]);
+	});
+
+	it('presents a post by slug', () => {
+		const post = presenter.getPostBySlug(['title', 'content'], 'test1');
+		const { title, content } = post;
+		expect(title).toBe('test1');
+		expect(content.trim()).toBe('this is a test1 body');
+	});
+});
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
