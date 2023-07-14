@@ -41,7 +41,7 @@ export default async function Page({ params }: Props) {
 
 	return (
 		<div className='layout'>
-			<PostItem content={post.content} />;
+			<PostItem content={post.content} />
 		</div>
 	);
 }
