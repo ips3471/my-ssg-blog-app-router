@@ -36,7 +36,7 @@ export default function RootLayout({
 							<img src='/imgs/logo.png' width={50} alt='logo' />
 						</h1>
 					</Link>
-					<Link href={'/posts'}>Articles</Link>
+					<Link href={'/'}>Articles</Link>
 				</nav>
 				{children}
 			</body>
