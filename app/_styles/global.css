@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes loading {
+	0% {
+		transform: translateX(-100%);
+	}
+	100% {
+		transform: translateX(100%);
+	}
+}
+
+@layer components {
+	.loading-animation::before {
+		content: '';
+		display: block;
+		height: 100%;
+		width: 100%;
+		animation: loading 1s infinite;
+		background: linear-gradient(to right, transparent, #d9d9d9, transparent);
+	}
+
+	.layout {
+		@apply p-3;
+	}
+}
