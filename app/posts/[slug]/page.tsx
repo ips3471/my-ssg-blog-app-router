@@ -1,7 +1,6 @@
 import { PostPresenter } from '@/app/_api/api';
 import PostItem from './post-item';
 import markdownToHtml from '@/app/_lib/markdownToHtml';
-import { Metadata, ResolvingMetadata } from 'next';
 
 type Props = {
 	params: {
@@ -22,15 +21,12 @@ async function getPost(slug: string) {
 }
 
 export async function generateStaticParams() {
-	const allPosts = await presenter.getAllPosts(['slug']);
+	const allPosts = presenter.getAllPosts(['slug']);
 	const paths = allPosts.map(({ slug }) => ({ params: { slug } }));
 	return paths;
 }
 
-export async function generateMetadata(
-	{ params }: Props,
-	parent: ResolvingMetadata,
-): Promise<Metadata> {
+export async function generateMetadata({ params }: Props) {
 	const slug = params.slug;
 
 	const post = presenter.getPostBySlug(['title', 'description'], slug);
