@@ -22,13 +22,12 @@ async function getPost(slug: string) {
 
 export async function generateStaticParams() {
 	const allPosts = presenter.getAllPosts(['slug']);
-	const paths = allPosts.map(({ slug }) => ({ params: { slug } }));
+	const paths = allPosts.map(post => ({ slug: post.slug }));
 	return paths;
 }
 
 export async function generateMetadata({ params }: Props) {
 	const slug = params.slug;
-
 	const post = presenter.getPostBySlug(['title', 'description'], slug);
 
 	return {

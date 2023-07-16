@@ -26,9 +26,15 @@
 	}
 }
 
+h2 {
+	@apply font-bold;
+}
+
+p {
+	@apply font-light mb-5;
+}
+
 h1,
 nav {
-	font-family: var(--font-rubik);
-	font-weight: 400;
-	font-style: normal;
+	@apply font-rubik;
 }
