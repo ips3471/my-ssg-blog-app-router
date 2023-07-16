@@ -1,4 +1,4 @@
-import presenter from '@/app/_api/api';
+import { getAllPosts, getPostBySlug } from '@/app/_api/api';
 import PostItem from './post-item';
 
 type Props = {
@@ -8,12 +8,17 @@ type Props = {
 };
 
 async function getPost(slug: string) {
-	return presenter.getPostBySlug(slug);
+	return await getPostBySlug(slug);
+}
+
+export async function generateStaticParams() {
+	const posts = await getAllPosts();
+	const paths = posts.map(post => ({ slug: post.slug }));
+	return paths;
 }
 
 export async function generateMetadata({ params }: Props) {
-	const slug = params.slug;
-	const post = presenter.getPostBySlug(slug);
+	const post = await getPost(params.slug);
 
 	return {
 		title: post.title,
@@ -29,10 +34,4 @@ export default async function Page({ params }: Props) {
 			<PostItem content={post.content || ''} />
 		</div>
 	);
-}
-
-export async function generateStaticParams() {
-	const allPosts = presenter.getAllPosts();
-	const paths = allPosts.map(post => ({ slug: post.slug }));
-	return paths;
 }

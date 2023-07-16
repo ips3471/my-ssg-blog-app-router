@@ -7,51 +7,59 @@ import markdownToHtml from '@/app/_lib/markdownToHtml';
 export type Item = {
 	[key in Field]?: string;
 };
+
 type Field = keyof PostType;
+const postsDir = 'app/__posts';
+const dataFields: Field[] = [
+	'content',
+	'date',
+	'description',
+	'slug',
+	'tags',
+	'title',
+];
 
-class PostPresenter {
-	readonly rootDir: string;
-	readonly files: string[];
-	fields: Field[];
-	constructor(folderPath: string = 'app/__posts') {
-		this.rootDir = join(process.cwd(), folderPath);
-		this.files = fs.readdirSync(this.rootDir);
-		this.fields = ['title', 'date', 'description', 'slug', 'content', 'tags'];
-	}
+function fileToItem(fileOrSlug: string) {
+	const slug =
+		fileOrSlug.slice(-3) === '.md' ? fileOrSlug.replace('.md', '') : fileOrSlug;
 
-	private getPostWithField(filename: string) {
-		const filePath = join(this.rootDir, filename);
-		const file = fs.readFileSync(filePath, 'utf-8');
+	const path = join(postsDir, `${slug}.md`);
+	const parsed = fs.readFileSync(path, 'utf-8');
+	const { content, data } = matter(parsed);
 
-		const { content, data } = matter(file);
+	const item: PostType = {
+		content: '',
+		date: '',
+		description: '',
+		slug: '',
+		tags: [],
+		title: '',
+	};
 
-		const item: Item = {};
+	dataFields.forEach(async field => {
+		if (typeof data[field] !== 'undefined') {
+			item[field] = data[field];
+		}
+		if (field === 'slug') {
+			item.slug = slug;
+		}
+		if (field === 'content') {
+			const contentBody = await markdownToHtml(content);
+			item.content = contentBody;
+		}
+	});
 
-		this.fields.forEach(async field => {
-			const html = await markdownToHtml(content || '');
-			if (field === 'slug') {
-				item.slug = filename.replace('.md', '');
-			} else if (field === 'content') {
-				item.content = html;
-			} else {
-				item[field] = data[field];
-			}
-		});
-		return item;
-	}
-
-	getPostBySlug(slug: string) {
-		const filename = slug + '.md';
-		const post = this.getPostWithField(filename);
-		return post;
-	}
-
-	getAllPosts() {
-		const posts = this.files
-			.map(filename => this.getPostWithField(filename))
-			.sort((prev, next) => (prev.date! > next.date! ? -1 : 1));
-		return posts;
-	}
+	return item;
 }
 
-export default new PostPresenter();
+export async function getAllPosts() {
+	const files = fs.readdirSync(postsDir);
+	const posts = files
+		.map(fileToItem)
+		.sort((prev, next) => (prev.date! > next.date! ? -1 : 1));
+	return posts;
+}
+
+export async function getPostBySlug(slug: string) {
+	return fileToItem(slug);
+}

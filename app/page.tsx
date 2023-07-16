@@ -1,9 +1,8 @@
 import Link from 'next/link';
-import presenter from './_api/api';
+import { getAllPosts } from './_api/api';
 
 async function getPosts() {
-	const allPosts = presenter.getAllPosts();
-	return allPosts;
+	return await getAllPosts();
 }
 
 export default async function Page() {

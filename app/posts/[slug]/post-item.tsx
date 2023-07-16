@@ -1,3 +1,5 @@
+'use client';
+
 import markdownStyles from '@/app/_components/markdown-styles.module.css';
 
 type Props = {
@@ -9,7 +11,7 @@ export default function PostItem({ content }: Props) {
 		<div
 			id='show-markdown'
 			className={markdownStyles['markdown']}
-			dangerouslySetInnerHTML={{ __html: content || '' }}
+			dangerouslySetInnerHTML={{ __html: content }}
 		/>
 	);
 }
