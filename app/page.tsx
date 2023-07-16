@@ -1,15 +1,8 @@
-import { PostPresenter } from './_api/api';
+import presenter from './_api/api';
 import HomePage from './home-page';
 
-const presenter = new PostPresenter();
-
 async function getPosts() {
-	const allPosts = presenter.getAllPosts([
-		'title',
-		'date',
-		'description',
-		'slug',
-	]);
+	const allPosts = presenter.getAllPosts();
 	return allPosts;
 }
 

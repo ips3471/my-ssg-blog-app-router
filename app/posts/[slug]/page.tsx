@@ -1,4 +1,4 @@
-import { PostPresenter } from '@/app/_api/api';
+import presenter from '@/app/_api/api';
 import PostItem from './post-item';
 import markdownToHtml from '@/app/_lib/markdownToHtml';
 
@@ -8,27 +8,22 @@ type Props = {
 	};
 };
 
-const presenter = new PostPresenter();
-
 async function getPost(slug: string) {
-	const post = presenter.getPostBySlug(
-		['title', 'date', 'content', 'description'],
-		slug,
-	);
+	const post = presenter.getPostBySlug(slug);
 	const content = await markdownToHtml(post.content || '');
 
 	return { ...post, content };
 }
 
 export async function generateStaticParams() {
-	const allPosts = presenter.getAllPosts(['slug']);
+	const allPosts = presenter.getAllPosts();
 	const paths = allPosts.map(post => ({ slug: post.slug }));
 	return paths;
 }
 
 export async function generateMetadata({ params }: Props) {
 	const slug = params.slug;
-	const post = presenter.getPostBySlug(['title', 'description'], slug);
+	const post = presenter.getPostBySlug(slug);
 
 	return {
 		title: post.title,

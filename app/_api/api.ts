@@ -8,15 +8,17 @@ export type Item = {
 };
 type Field = keyof PostType;
 
-export class PostPresenter {
+class PostPresenter {
 	readonly rootDir: string;
 	readonly files: string[];
+	fields: Field[];
 	constructor(folderPath: string = 'app/__posts') {
 		this.rootDir = join(process.cwd(), folderPath);
 		this.files = fs.readdirSync(this.rootDir);
+		this.fields = ['title', 'date', 'description', 'slug', 'content', 'tags'];
 	}
 
-	private getPostWithField(filename: string, fields: Field[]) {
+	private getPostWithField(filename: string) {
 		const filePath = join(this.rootDir, filename);
 		const file = fs.readFileSync(filePath, 'utf-8');
 
@@ -24,34 +26,30 @@ export class PostPresenter {
 
 		const item: Item = {};
 
-		fields.forEach(field => {
-			if (fields.length == 0) {
-				return {};
-			}
-			if (typeof data[field] !== 'undefined') {
-				item[field] = data[field];
-			}
+		this.fields.forEach(field => {
 			if (field === 'slug') {
 				item.slug = filename.replace('.md', '');
-			}
-			if (field === 'content') {
+			} else if (field === 'content') {
 				item.content = content;
+			} else {
+				item[field] = data[field];
 			}
 		});
 		return item;
 	}
 
-	getPostBySlug(fields: Field[], slug: string) {
+	getPostBySlug(slug: string) {
 		const filename = slug + '.md';
-
-		const post = this.getPostWithField(filename, fields);
+		const post = this.getPostWithField(filename);
 		return post;
 	}
 
-	getAllPosts(fields: Field[] = []) {
+	getAllPosts() {
 		const posts = this.files
-			.map(filename => this.getPostWithField(filename, fields))
+			.map(filename => this.getPostWithField(filename))
 			.sort((prev, next) => (prev.date! > next.date! ? -1 : 1));
 		return posts;
 	}
 }
+
+export default new PostPresenter();
