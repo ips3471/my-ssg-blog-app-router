@@ -15,7 +15,7 @@ export default async function Page() {
 					className={'hover:underline py-4 border-b hover:text-blue-500'}
 					key={index}
 				>
-					<Link href={`/posts/${post.slug}`}>
+					<Link href={`./posts/${post.slug}`}>
 						<h2 className='text-2xl'>{post.title}</h2>
 						<time>
 							<small>{post.date}</small>
