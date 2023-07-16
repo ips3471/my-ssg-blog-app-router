@@ -1,4 +1,3 @@
-'use client';
 import markdownStyles from '@/app/_components/markdown-styles.module.css';
 
 type Props = {

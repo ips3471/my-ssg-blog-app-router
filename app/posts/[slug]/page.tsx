@@ -15,12 +15,6 @@ async function getPost(slug: string) {
 	return { ...post, content };
 }
 
-export async function generateStaticParams() {
-	const allPosts = presenter.getAllPosts();
-	const paths = allPosts.map(post => ({ slug: post.slug }));
-	return paths;
-}
-
 export async function generateMetadata({ params }: Props) {
 	const slug = params.slug;
 	const post = presenter.getPostBySlug(slug);
@@ -39,4 +33,10 @@ export default async function Page({ params }: Props) {
 			<PostItem content={post.content} />
 		</div>
 	);
+}
+
+export async function generateStaticParams() {
+	const allPosts = presenter.getAllPosts();
+	const paths = allPosts.map(post => ({ slug: post.slug }));
+	return paths;
 }
