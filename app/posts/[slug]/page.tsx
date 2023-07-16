@@ -7,14 +7,14 @@ type Props = {
 	};
 };
 
-async function getPost(slug: string) {
-	return await getPostBySlug(slug);
-}
-
 export async function generateStaticParams() {
 	const posts = await getAllPosts();
 	const paths = posts.map(post => ({ slug: post.slug }));
 	return paths;
+}
+
+async function getPost(slug: string) {
+	return await getPostBySlug(slug);
 }
 
 export async function generateMetadata({ params }: Props) {
@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: Props) {
 	};
 }
 
-export default async function Page({ params }: Props) {
+export default async function Post({ params }: Props) {
 	const post = await getPost(params.slug);
 
 	return (
