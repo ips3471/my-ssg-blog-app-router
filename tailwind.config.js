@@ -11,6 +11,10 @@ module.exports = {
 				'dark-gray': '#494554',
 				'light-gray': '#686473',
 			},
+			fontFamily: {
+				hahmlet: ['var(--font-hahmlet)'],
+				rubik: ['var(--font-rubik)'],
+			},
 		},
 	},
 	plugins: [],

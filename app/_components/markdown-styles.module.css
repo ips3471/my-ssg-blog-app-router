@@ -1,10 +1,5 @@
 .markdown {
-	font-family: var(--font-hahmlet);
-	font-style: normal;
-}
-
-.markdown {
-	@apply text-gray-900 leading-normal break-words;
+	@apply text-gray-900 leading-normal break-words font-hahmlet;
 }
 
 .markdown > * + * {
@@ -89,12 +84,6 @@
 
 .markdown table {
 	@apply text-base border-gray-600;
-}
-
-.markdown p {
-	font-family: var(--font-hahmlet);
-	font-weight: 400;
-	font-style: normal;
 }
 
 .markdown th {
