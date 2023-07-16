@@ -1,6 +1,5 @@
 import presenter from '@/app/_api/api';
 import PostItem from './post-item';
-import markdownToHtml from '@/app/_lib/markdownToHtml';
 
 type Props = {
 	params: {
@@ -9,10 +8,7 @@ type Props = {
 };
 
 async function getPost(slug: string) {
-	const post = presenter.getPostBySlug(slug);
-	const content = await markdownToHtml(post.content || '');
-
-	return { ...post, content };
+	return presenter.getPostBySlug(slug);
 }
 
 export async function generateMetadata({ params }: Props) {
@@ -30,7 +26,7 @@ export default async function Page({ params }: Props) {
 
 	return (
 		<div className='layout'>
-			<PostItem content={post.content} />
+			<PostItem content={post.content || ''} />
 		</div>
 	);
 }

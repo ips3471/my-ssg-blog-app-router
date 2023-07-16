@@ -2,6 +2,7 @@ import fs from 'fs';
 import { join } from 'path';
 import matter from 'gray-matter';
 import PostType from '../_interfaces/post';
+import markdownToHtml from '@/app/_lib/markdownToHtml';
 
 export type Item = {
 	[key in Field]?: string;
@@ -26,11 +27,12 @@ class PostPresenter {
 
 		const item: Item = {};
 
-		this.fields.forEach(field => {
+		this.fields.forEach(async field => {
+			const html = await markdownToHtml(content || '');
 			if (field === 'slug') {
 				item.slug = filename.replace('.md', '');
 			} else if (field === 'content') {
-				item.content = content;
+				item.content = html;
 			} else {
 				item[field] = data[field];
 			}
