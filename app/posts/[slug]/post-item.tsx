@@ -22,8 +22,9 @@ export default function PostItem({ content }: Props) {
 				),
 			}}
 			className={styles.markdown}
-			children={content}
 			remarkPlugins={[remarkGfm]}
-		/>
+		>
+			{content}
+		</ReactMarkdown>
 	);
 }

@@ -26,8 +26,8 @@ function ListPreview({ post, tags }: Props) {
 					<ul className='flex gap-1 text-xs'>
 						{tags
 							.filter(tag => post.tags.includes(tag.name))
-							.map(tag => (
-								<TagButton tag={tag} options={{ padding: 3 }} />
+							.map((tag, index) => (
+								<TagButton key={index} tag={tag} options={{ padding: 3 }} />
 							))}
 					</ul>
 				</div>

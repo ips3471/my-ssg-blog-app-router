@@ -21,7 +21,7 @@ function PageFilter({ posts, tags }: Props) {
 		}
 		const filtered = posts.filter(post => post.tags.includes(filter));
 		return setItems(filtered);
-	}, [filter]);
+	}, [filter, posts]);
 
 	return (
 		<div>
