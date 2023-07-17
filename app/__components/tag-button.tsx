@@ -1,15 +1,15 @@
+import TagType from '../__interfaces/tag';
+
 interface Props {
 	onClick?: () => void;
-	backgroundColor: string;
-	name: string;
+	tag: TagType;
 	options?: {
 		padding: number;
 	};
 }
 
 function TagButton({
-	backgroundColor,
-	name,
+	tag,
 	onClick,
 	options = {
 		padding: 5,
@@ -19,12 +19,12 @@ function TagButton({
 	return (
 		<li
 			onClick={onClick}
-			style={{ backgroundColor, padding }}
+			style={{ backgroundColor: tag.color, padding }}
 			className={`${
 				onClick ? 'cursor-pointer' : ''
 			} inline-block rounded-sm font-rubik`}
 		>
-			<span className='opacity-70'>{name}</span>
+			<span className='opacity-70'>{tag.name}</span>
 		</li>
 	);
 }
