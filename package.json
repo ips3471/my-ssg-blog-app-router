@@ -19,6 +19,7 @@
 		"gray-matter": "^4.0.3",
 		"next": "^13.4.10",
 		"postcss": "8.4.25",
+		"randomcolor": "^0.6.2",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
 		"remark": "^14.0.3",
@@ -28,6 +29,7 @@
 		"typescript": "^5.1.6"
 	},
 	"devDependencies": {
-		"@babel/preset-typescript": "^7.22.5"
+		"@babel/preset-typescript": "^7.22.5",
+		"@types/randomcolor": "^0.5.7"
 	}
 }

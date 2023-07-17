@@ -2,12 +2,7 @@
 date: '2023-07-13'
 description: 데이터를 서버로부터 가져올 때는 적절한 상황에 맞게 직렬 또는 병렬 방식을 선택하여 데이터를 가져오는 것이 중요합니다.
 tags:
-  - perallel
-  - serial
-  - waterfall
-  - event-loop
-  - synchronous
-  - asynchronous
+  - Javascript
 title: 데이터를 가져올 때 직렬과 병렬 방식의 차이점
 ---
 

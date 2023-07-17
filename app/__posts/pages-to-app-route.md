@@ -2,10 +2,7 @@
 date: '2023-07-13'
 description: Next.js의 App Router를 기존 프로젝트에 적용하는 작업을 소개합니다.
 tags:
-  - app-router
-  - server-component
-  - client-component
-  - data-fetching
+  - Next
 title: pages에서 App Router로 마이그레이션 하기
 ---
 

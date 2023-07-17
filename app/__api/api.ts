@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { join } from 'path';
 import matter from 'gray-matter';
-import PostType from '../_interfaces/post';
+import PostType from '../__interfaces/post';
 import markdownToHtml from '@/app/__lib/markdownToHtml';
 
 export type Item = {
