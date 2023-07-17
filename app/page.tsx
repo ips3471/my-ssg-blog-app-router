@@ -1,28 +1,23 @@
-import Link from 'next/link';
-import { getAllPosts } from './__api/api';
+import { getAllPosts, getAllTags } from './__api/api';
+import ListPreview from './__components/list-preview';
+import TagType from './__interfaces/tag';
 
 async function getPosts() {
 	return await getAllPosts();
 }
 
+async function getTags(): Promise<TagType[]> {
+	return await getAllTags();
+}
+
 export default async function Page() {
 	const allPosts = await getPosts();
+	const allTags = await getTags();
 
 	return (
 		<ul className='layout'>
 			{allPosts.map((post, index) => (
-				<li
-					className={'hover:underline py-4 border-b hover:text-blue-500'}
-					key={index}
-				>
-					<Link href={`./posts/${post.slug}`}>
-						<h2 className='text-2xl'>{post.title}</h2>
-						<time>
-							<small>{post.date}</small>
-						</time>
-						<p className='line-clamp-3'>{post.description}</p>
-					</Link>
-				</li>
+				<ListPreview key={index} post={post} tags={allTags} />
 			))}
 		</ul>
 	);

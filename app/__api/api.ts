@@ -3,6 +3,8 @@ import { join } from 'path';
 import matter from 'gray-matter';
 import PostType from '../__interfaces/post';
 import markdownToHtml from '@/app/__lib/markdownToHtml';
+import TagType from '../__interfaces/tag';
+import randomColor from 'randomcolor';
 
 export type Item = {
 	[key in Field]?: string;
@@ -62,4 +64,19 @@ export async function getAllPosts() {
 
 export async function getPostBySlug(slug: string) {
 	return fileToItem(slug);
+}
+
+export async function getAllTags() {
+	const allPosts = await getAllPosts();
+	const tags = allPosts.reduce((acc: string[], curr) => {
+		return acc.concat(curr.tags);
+	}, []);
+	const uniqueTags = Array.from(new Set(tags));
+	const tagsWithColor = uniqueTags.map(tag => ({
+		name: tag,
+		color: randomColor({
+			luminosity: 'light',
+		}),
+	}));
+	return tagsWithColor;
 }
