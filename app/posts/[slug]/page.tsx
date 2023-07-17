@@ -1,4 +1,4 @@
-import { getAllPosts, getPostBySlug } from '@/app/_api/api';
+import { getAllPosts, getPostBySlug } from '@/app/__api/api';
 import PostItem from './post-item';
 
 type Props = {

@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
-import { title, description } from './_lib/constants';
-import './_styles/global.css';
+import { title, description } from './__lib/constants';
+import './__styles/global.css';
 import Link from 'next/link';
 import { Rubik_Mono_One } from 'next/font/google';
 import localFont from 'next/font/local';
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export const hahmlet = localFont({
 	variable: '--font-hahmlet',
-	src: './_styles/fonts/Hahmlet-VariableFont_wght.ttf',
+	src: './__styles/fonts/Hahmlet-VariableFont_wght.ttf',
 	display: 'swap',
 });
 

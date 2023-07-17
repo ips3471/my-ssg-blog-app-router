@@ -2,7 +2,7 @@ import fs from 'fs';
 import { join } from 'path';
 import matter from 'gray-matter';
 import PostType from '../_interfaces/post';
-import markdownToHtml from '@/app/_lib/markdownToHtml';
+import markdownToHtml from '@/app/__lib/markdownToHtml';
 
 export type Item = {
 	[key in Field]?: string;

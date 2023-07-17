@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { getAllPosts } from './_api/api';
+import { getAllPosts } from './__api/api';
 
 async function getPosts() {
 	return await getAllPosts();
