@@ -1,8 +1,5 @@
-import Link from 'next/link';
 import { getAllPosts, getAllTags } from '../__api/api';
 import PageFilter from './page-filter';
-
-interface Props {}
 
 async function getPosts() {
 	return await getAllPosts();
@@ -12,7 +9,7 @@ async function getTags() {
 	return await getAllTags();
 }
 
-async function Posts({}: Props) {
+async function Posts() {
 	const allPosts = await getPosts();
 	const tags = await getTags();
 

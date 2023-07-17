@@ -2,8 +2,6 @@ import fs from 'fs';
 import { join } from 'path';
 import matter from 'gray-matter';
 import PostType from '../__interfaces/post';
-import markdownToHtml from '@/app/__lib/markdownToHtml';
-import TagType from '../__interfaces/tag';
 import randomColor from 'randomcolor';
 
 export type Item = {
@@ -46,8 +44,7 @@ function fileToItem(fileOrSlug: string) {
 			item.slug = slug;
 		}
 		if (field === 'content') {
-			const contentBody = await markdownToHtml(content);
-			item.content = contentBody;
+			item.content = content;
 		}
 	});
 

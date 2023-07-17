@@ -1,6 +1,8 @@
 'use client';
-
-import markdownStyles from '@/app/__components/markdown-styles.module.css';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import styles from '@/app/__components/markdown-styles.module.css';
+import Image from 'next/image';
 
 type Props = {
 	content: string;
@@ -8,10 +10,20 @@ type Props = {
 
 export default function PostItem({ content }: Props) {
 	return (
-		<div
-			id='show-markdown'
-			className={markdownStyles['markdown']}
-			dangerouslySetInnerHTML={{ __html: content }}
+		<ReactMarkdown
+			components={{
+				img: props => (
+					<Image
+						src={props.src!}
+						alt={props.alt || ''}
+						width={1200}
+						height={600}
+					/>
+				),
+			}}
+			className={styles.markdown}
+			children={content}
+			remarkPlugins={[remarkGfm]}
 		/>
 	);
 }
